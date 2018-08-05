@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<script type="text/javascript">
+		<!--
+			// プロトタイプの定義
+			var Member = function() {
+				// 発言回数
+				this.count = 0;
+				// スタンプ回数
+				this.stamp = 0;
+				// 発言字数
+				this.mojisu = 0;
+			}
+		
+			function syukei() {
+				var talk = document.getElementById('js-talk').value;
+				var talk_split = talk.split("\n");				
+				
+				// 結果を代入する配列
+				var kekka = new Object();
+
+				var talk_owner = null;
+				for(i = 0; i < talk_split.length; i++) {
+					var talk_line = talk_split[i];
+					var seiki = /^\d{2}:\d{2}\t(.+)\t(.+)/
+					if (talk_line.match(seiki) != null) {
+						// hh:mmタブ（発言者）タブ（発言内容）
+						
+						// 発言内容
+						var talk_naiyou = talk_line.replace(seiki, "\$2");
+						// 発言の続きの際のために、varをつけた宣言にしない
+						talk_owner = talk_line.replace(seiki, "\$1");
+						
+						// 新しい発言者の場合はクラスを宣言
+						if (kekka[talk_owner] == null) {
+							kekka[talk_owner] = new Member();
+						}
+						kekka[talk_owner].count++;
+						
+						// スタンプ
+						if (talk_naiyou.match(/^\[スタンプ\]$/) != null) {
+							kekka[talk_owner].stamp++;
+						}else{
+							// 文字数
+							kekka[talk_owner].mojisu += talk_naiyou.length;
+						}
+						
+						
+					}else if (talk_line.match(/^\d{4}\/\d{2}\/\d{2}/) != null) {
+						// 日付
+					}else{
+						// それ以外は前の発言の続きというケース
+						// 発言の続きでスタンプはありえない
+						if (talk_owner != null) {
+							kekka[talk_owner].mojisu += talk_line.length;
+						}
+					}
+					
+				}
+				// 表示版
+				hyouji_kekka(kekka);
+				
+				// CSV
+				hyouji_csv(kekka);
+			}
+			function hyouji_kekka(kekka) {
+				var kekka_msg = "";	
+				
+				for(owner in kekka) {
+					var stamp_percent = Math.round((kekka[owner].stamp * 100 /kekka[owner].count) * 100)/100;
+					kekka_msg += owner + "\t発言" + kekka[owner].count +"回\t" 
+						+"スタンプ"+ kekka[owner].stamp+"発"+ "(" + stamp_percent  + "%)" +"\t"
+						+ "発言字数" +kekka[owner].mojisu +"文字" +"\n";
+				}
+				alert(kekka_msg);
+			}
+			function hyouji_csv(kekka) {
+				var kekka_msg = "発言者,発言回数,スタンプ,スタンプ率,発言字数\n";
+				for(owner in kekka) {
+					kekka_msg += owner + "," + kekka[owner].count +"," 
+						+ kekka[owner].stamp+ "," + (kekka[owner].stamp/kekka[owner].count) + ","
+						+ kekka[owner].mojisu +"\n";
+				}
+				alert(kekka_msg);
+				
+			}
+			
+		// -->
+		</script>	
+	</head>
+	<body>
+		<h1>LINE発言集計</h1>
+		①集計したい発言を以下のテキストエリアに貼り付けてください<br/>
+		<textarea cols="100" rows="15" id="js-talk">
+		</textarea>
+		<br/><br/>
+		②集計ボタンをクリックしてください<br/>
+		<input type="button" value="集計" onClick=syukei()>
+		<br/><br/>
+		<div id="js-kekka">
+		</div>
+	</body>
+</html>
