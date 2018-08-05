@@ -72,7 +72,7 @@
 						+"スタンプ"+ kekka[owner].stamp+"発"+ "(" + stamp_percent  + "%)" +"\t"
 						+ "発言字数" +kekka[owner].mojisu +"文字" +"\n";
 				}
-				alert(kekka_msg);
+				document.getElementById("js-kekka").innerHTML = kekka_msg;
 			}
 			function hyouji_csv(kekka) {
 				var kekka_msg = "発言者,発言回数,スタンプ,スタンプ率,発言字数\n";
@@ -81,8 +81,7 @@
 						+ kekka[owner].stamp+ "," + (kekka[owner].stamp/kekka[owner].count) + ","
 						+ kekka[owner].mojisu +"\n";
 				}
-				alert(kekka_msg);
-				
+				document.getElementById("js-csv").innerHTML = kekka_msg;
 			}
 			
 		// -->
@@ -97,7 +96,9 @@
 		②集計ボタンをクリックしてください<br/>
 		<input type="button" value="集計" onClick=syukei()>
 		<br/><br/>
-		<div id="js-kekka">
-		</div>
+	<textarea cols="100" rows="15" id="js-kekka" name="js-kekka">
+		</textarea>
+	<textarea cols="100" rows="15" id="js-csv" name="js-csv">
+		</textarea>
 	</body>
 </html>
