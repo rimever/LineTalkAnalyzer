@@ -6,19 +6,23 @@ namespace LineAnalyze.Domain.Models
     public enum TalkType
     {
         None = -1,
+
         /// <summary>
         /// メッセージ
         /// </summary>
         Message,
+
         /// <summary>
         /// スタンプ
         /// </summary>
         Stamp,
+
         /// <summary>
         /// 写真
         /// </summary>
         Picture
     }
+
     public class Talk
     {
         /// <summary>

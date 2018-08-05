@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LineAnalyze.Domain.Models;
 using LineAnalyze.Domain.Services;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace LineAnalyze.Tests.Services
 {
@@ -33,7 +29,7 @@ namespace LineAnalyze.Tests.Services
             var second = list.Skip(1).FirstOrDefault();
             var third = list.Skip(2).FirstOrDefault();
 
-            Assert.AreEqual(first.Message,"明けましておめでとうございます。");
+            Assert.AreEqual(first.Message, "明けましておめでとうございます。");
             Assert.AreEqual(first.User.Name, "aaa");
             Assert.AreEqual(first.TalkType, TalkType.Message);
             Assert.AreEqual(first.Time, new DateTime(2013, 1, 1, 0, 7, 0));

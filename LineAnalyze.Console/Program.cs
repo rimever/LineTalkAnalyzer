@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LineAnalyze.Domain.Models;
 using LineAnalyze.Domain.Services;
 using NMeCab;
@@ -31,20 +28,18 @@ namespace LineAnalyze.Console
                     totalWords.AddRange(words);
                 }
 
-                var enumerable = totalWords.GroupBy(w => w.Id).Select(x => new
-                {
-                    Id = x.Key,
-                    Count = x.Count()
-                })
+                var enumerable = totalWords.GroupBy(w => w.RealName).Select(x => new
+                    {
+                        RealName = x.Key,
+                        Count = x.Count()
+                    })
                     .Where(x => x.Count > 1)
                     .OrderByDescending(x => x.Count);
-                System.Console.WriteLine("単語,出現回数,単語情報...");
+                System.Console.WriteLine("単語,出現回数");
                 foreach (var data in enumerable)
                 {
-                    var split = data.Id.Split(new[] { "," }, StringSplitOptions.None);
-                    System.Console.WriteLine(split[0] + "," + data.Count + "," + data.Id);
+                    System.Console.WriteLine(data.RealName + "," + data.Count);
                 }
-
             }
             else
             {

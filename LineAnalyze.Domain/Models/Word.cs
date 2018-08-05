@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LineAnalyze.Domain.Models
 {
@@ -21,6 +17,11 @@ namespace LineAnalyze.Domain.Models
         /// </summary>
         public List<string> Elements { get; set; }
 
-        public string Id => Name + "," + string.Join(",",Elements.ToArray());
+        public string RealName
+        {
+            get { return Elements[6]; }
+        }
+
+        public string Id => Name + "," + string.Join(",", Elements.ToArray());
     }
 }

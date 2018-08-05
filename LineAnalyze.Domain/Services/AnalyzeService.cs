@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using LineAnalyze.Domain.Models;
 using NMeCab;
 
@@ -39,7 +35,8 @@ namespace LineAnalyze.Domain.Services
                 var match = Regex.Match(line, dateRegexp);
                 if (match.Success)
                 {
-                    if (DateTime.TryParseExact(match.Value, "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
+                    if (DateTime.TryParseExact(match.Value, "yyyy/MM/dd", CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out var dateValue))
                     {
                         if (startDate == DateTime.MinValue)
                         {
@@ -54,8 +51,9 @@ namespace LineAnalyze.Domain.Services
                 Talk talk = CreateTalk(startDate, nowDate, line);
                 if (talk == null)
                 {
-                    continue;                    
+                    continue;
                 }
+
                 yield return talk;
             }
         }
@@ -80,6 +78,7 @@ namespace LineAnalyze.Domain.Services
                 node = node.Next;
             }
         }
+
         /// <summary>
         /// <seealso cref="Talk"/>を生成します。
         /// </summary>
@@ -89,11 +88,12 @@ namespace LineAnalyze.Domain.Services
         /// <returns></returns>
         private Talk CreateTalk(DateTime startDate, DateTime nowDate, string line)
         {
-            var splits = line.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            var splits = line.Split(new[] {'\t'}, StringSplitOptions.RemoveEmptyEntries);
             if (splits.Length < 3)
             {
                 return null;
             }
+
             var dateText = splits[0];
             var userName = splits[1];
             var message = splits[2];
@@ -113,7 +113,7 @@ namespace LineAnalyze.Domain.Services
                 message = string.Empty;
             }
 
-            var talk = new Talk()
+            var talk = new Talk
             {
                 Message = message,
                 Time = talkTime,
@@ -125,7 +125,7 @@ namespace LineAnalyze.Domain.Services
 
         private static DateTime GetTalkTime(DateTime nowDate, string dateText)
         {
-            var dateSplits = dateText.Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            var dateSplits = dateText.Split(new[] {":"}, StringSplitOptions.RemoveEmptyEntries);
             var talkTime = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, int.Parse(dateSplits[0]),
                 int.Parse(dateSplits[1]), 0);
             return talkTime;
@@ -135,7 +135,7 @@ namespace LineAnalyze.Domain.Services
         {
             if (!Users.ContainsKey(userName))
             {
-                Users.Add(userName, new User()
+                Users.Add(userName, new User
                 {
                     Name = userName,
                     EntryTime = startDate
