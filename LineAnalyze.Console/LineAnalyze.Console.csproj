@@ -59,9 +59,7 @@
     <None Include="dic\ipadic\unk.dic" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="talk\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LineAnalyze.Domain\LineAnalyze.Domain.csproj">
       <Project>{a04c3158-e673-484c-92ae-8a516a7b00de}</Project>

@@ -70,7 +70,7 @@ namespace LineAnalyze.Domain.Services
 
                     yield return new Word
                     {
-                        Name = word,
+                        Surface = word,
                         Elements = data
                     };
                 }
