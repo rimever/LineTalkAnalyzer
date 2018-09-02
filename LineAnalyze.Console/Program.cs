@@ -29,10 +29,10 @@ namespace LineAnalyze.Console
             }
 
             var enumerable = totalWords.GroupBy(w => w.Base).Select(x => new
-            {
-                RealName = x.Key,
-                Count = x.Count()
-            })
+                {
+                    RealName = x.Key,
+                    Count = x.Count()
+                })
                 .Where(x => x.Count > 1)
                 .OrderByDescending(x => x.Count);
             System.Console.WriteLine("単語,出現回数");
@@ -40,7 +40,6 @@ namespace LineAnalyze.Console
             {
                 System.Console.WriteLine(data.RealName + "," + data.Count);
             }
-
         }
     }
 }

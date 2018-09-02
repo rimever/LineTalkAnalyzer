@@ -24,6 +24,7 @@ namespace LineAnalyze.Domain.Models
         {
             get { return Elements[0]; }
         }
+
         /// <summary>
         /// 品詞細分類
         /// </summary>

@@ -8,5 +8,7 @@ namespace LineAnalyze.WordGraph.Models
     /// Data graph content handled manually by user (add/remove objects). The main idea is that you can dynamicaly
     /// remove/add objects into the GraphArea layout and then use data graph to restore original layout content.
     /// </summary>
-    public class WordGraphModel : BidirectionalGraph<WordDataVertex, WordDataEdge> { }
+    public class WordGraphModel : BidirectionalGraph<WordDataVertex, WordDataEdge>
+    {
+    }
 }

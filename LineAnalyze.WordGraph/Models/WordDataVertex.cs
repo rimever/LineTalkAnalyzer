@@ -10,13 +10,26 @@ namespace LineAnalyze.WordGraph.Models
      *  
      */
 
-    public class WordDataVertex: VertexBase
+    public class WordDataVertex : VertexBase
     {
+        /// <summary>
+        /// Default parameterless constructor for this class
+        /// (required for YAXLib serialization)
+        /// </summary>
+        public WordDataVertex() : this(string.Empty)
+        {
+        }
+
+        public WordDataVertex(string text = "")
+        {
+            Text = text;
+        }
+
         /// <summary>
         /// Some string property for example purposes
         /// </summary>
         public string Text { get; set; }
- 
+
         #region Calculated or static props
 
         public override string ToString()
@@ -25,18 +38,5 @@ namespace LineAnalyze.WordGraph.Models
         }
 
         #endregion
-
-        /// <summary>
-        /// Default parameterless constructor for this class
-        /// (required for YAXLib serialization)
-        /// </summary>
-        public WordDataVertex():this(string.Empty)
-        {
-        }
-
-        public WordDataVertex(string text = "")
-        {
-            Text = text;
-        }
     }
 }

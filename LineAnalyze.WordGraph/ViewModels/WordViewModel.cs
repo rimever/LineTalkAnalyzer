@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LineAnalyze.WordGraph.ViewModels
+﻿namespace LineAnalyze.WordGraph.ViewModels
 {
     /// <summary>
     /// 単語ViewModel
@@ -15,6 +9,7 @@ namespace LineAnalyze.WordGraph.ViewModels
         /// 基本形
         /// </summary>
         public string Base { get; set; }
+
         /// <summary>
         /// 頻出回数
         /// </summary>

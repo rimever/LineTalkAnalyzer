@@ -6,5 +6,8 @@ namespace LineAnalyze.WordGraph.Models
     /// <summary>
     /// Logics core object which contains all algorithms and logic settings
     /// </summary>
-    public class WordGXLogicCore : GXLogicCore<WordDataVertex, WordDataEdge, BidirectionalGraph<WordDataVertex, WordDataEdge>> { }
+    public class WordGXLogicCore : GXLogicCore<WordDataVertex, WordDataEdge,
+        BidirectionalGraph<WordDataVertex, WordDataEdge>>
+    {
+    }
 }

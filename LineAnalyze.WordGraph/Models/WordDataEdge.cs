@@ -24,9 +24,10 @@ namespace LineAnalyze.WordGraph.Models
         /// <param name="target">Target vertex data</param>
         /// <param name="weight">Optional edge weight</param>
         public WordDataEdge(WordDataVertex source, WordDataVertex target, double weight = 1)
-			: base(source, target, weight)
-		{
-		}
+            : base(source, target, weight)
+        {
+        }
+
         /// <summary>
         /// Default parameterless constructor (for serialization compatibility)
         /// </summary>
@@ -41,6 +42,7 @@ namespace LineAnalyze.WordGraph.Models
         public string Text { get; set; }
 
         #region GET members
+
         public override string ToString()
         {
             return Text;

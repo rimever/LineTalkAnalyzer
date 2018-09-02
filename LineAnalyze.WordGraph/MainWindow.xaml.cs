@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GraphX.Controls;
 using GraphX.PCL.Common.Enums;
 using GraphX.PCL.Logic.Algorithms.LayoutAlgorithms;
@@ -23,7 +11,6 @@ using LineAnalyze.Domain.Services;
 using LineAnalyze.WordGraph.Models;
 using LineAnalyze.WordGraph.ViewModels;
 using NMeCab;
-using QuickGraph;
 
 namespace LineAnalyze.WordGraph
 {
@@ -32,7 +19,7 @@ namespace LineAnalyze.WordGraph
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IDictionary<string,IList<Word>> _allTalkDictionary = new Dictionary<string, IList<Word>>();
+        private readonly IDictionary<string, IList<Word>> _allTalkDictionary = new Dictionary<string, IList<Word>>();
 
         /// <summary>
         /// 
@@ -59,7 +46,7 @@ namespace LineAnalyze.WordGraph
             foreach (var talk in talks)
             {
                 var words = service.ParseText(meCabTagger, talk.Message).ToList();
-                foreach (var word in words) 
+                foreach (var word in words)
                 {
                     if (word.Pos != "名詞"
                         && word.Pos != "動詞")
@@ -76,14 +63,14 @@ namespace LineAnalyze.WordGraph
                     {
                         continue;
                     }
-                if (!_allTalkDictionary.ContainsKey(talk.User.Name))
-                {
-                    _allTalkDictionary.Add(talk.User.Name, new List<Word>());
-                }
+
+                    if (!_allTalkDictionary.ContainsKey(talk.User.Name))
+                    {
+                        _allTalkDictionary.Add(talk.User.Name, new List<Word>());
+                    }
 
                     _allTalkDictionary[talk.User.Name].Add(word);
                 }
-
             }
 
             foreach (var userName in _allTalkDictionary.Keys)
@@ -109,22 +96,25 @@ namespace LineAnalyze.WordGraph
 
             foreach (var item in enumerable)
             {
-                WordViewModels.Add(new WordViewModel {Base = item.RealName, Count = item.Count});                
+                WordViewModels.Add(new WordViewModel {Base = item.RealName, Count = item.Count});
             }
 
             ListBoxWord.ItemsSource = WordViewModels;
         }
+
         private void SetupGraphArea()
         {
             //Lets create logic core and filled data graph with edges and vertices
-            var logicCore = new WordGXLogicCore {Graph = SetupGraph(), DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.KK};
+            var logicCore = new WordGXLogicCore
+                {Graph = SetupGraph(), DefaultLayoutAlgorithm = LayoutAlgorithmTypeEnum.KK};
             //This property sets layout algorithm that will be used to calculate vertices positions
             //Different algorithms uses different values and some of them uses edge Weight property.
             //Now we can set parameters for selected algorithm using AlgorithmFactory property. This property provides methods for
             //creating all available algorithms and algo parameters.
-            logicCore.DefaultLayoutAlgorithmParams = logicCore.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.KK);
+            logicCore.DefaultLayoutAlgorithmParams =
+                logicCore.AlgorithmFactory.CreateLayoutParameters(LayoutAlgorithmTypeEnum.KK);
             //Unfortunately to change algo parameters you need to specify params type which is different for every algorithm.
-            ((KKLayoutParameters)logicCore.DefaultLayoutAlgorithmParams).MaxIterations = 100;
+            ((KKLayoutParameters) logicCore.DefaultLayoutAlgorithmParams).MaxIterations = 100;
 
             //This property sets vertex overlap removal algorithm.
             //Such algorithms help to arrange vertices in the layout so no one overlaps each other.
@@ -184,12 +174,13 @@ namespace LineAnalyze.WordGraph
                 })
                 .Where(x => x.Count > 1)
                 .OrderByDescending(x => x.Count);
-            foreach (var word in WordViewModels.Where(vm=> topWords.Select(tw => tw.RealName).Contains(vm.Base)))
+            foreach (var word in WordViewModels.Where(vm => topWords.Select(tw => tw.RealName).Contains(vm.Base)))
             {
                 if (vertexDictionary.ContainsKey(word.Base))
                 {
                     continue;
                 }
+
                 var wordVertex = new WordDataVertex($"{word.Base}[{word.Count}]");
                 vertexDictionary.Add(word.Base, wordVertex);
                 dataGraph.AddVertex(wordVertex);
@@ -205,15 +196,18 @@ namespace LineAnalyze.WordGraph
                     {
                         continue;
                     }
-                    var dataEdge = new WordDataEdge(item.Value, wordVertex.Value,count)
+
+                    var dataEdge = new WordDataEdge(item.Value, wordVertex.Value, count)
                     {
                         Text = count.ToString()
                     };
                     dataGraph.AddEdge(dataEdge);
                 }
             }
+
             return dataGraph;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -227,6 +221,7 @@ namespace LineAnalyze.WordGraph
                     yield return selectedItem.ToString();
                 }
             }
+
             foreach (var selectedItem in ListBoxUser.SelectedItems)
             {
                 yield return selectedItem.ToString();
@@ -242,6 +237,7 @@ namespace LineAnalyze.WordGraph
                     yield return word;
                 }
             }
+
             foreach (var selectedItem in ListBoxWord.SelectedItems)
             {
                 var viewModel = selectedItem as WordViewModel;
@@ -249,6 +245,7 @@ namespace LineAnalyze.WordGraph
                 {
                     continue;
                 }
+
                 yield return viewModel;
             }
         }

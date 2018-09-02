@@ -8,5 +8,8 @@ namespace LineAnalyze.WordGraph.Models
     /// GraphArea is the visual panel component responsible for drawing visuals (vertices and edges).
     /// It is also provides many global preferences and methods that makes GraphX so customizable and user-friendly.
     /// </summary>
-    public class WordGraphArea : GraphArea<WordDataVertex, WordDataEdge, BidirectionalGraph<WordDataVertex, WordDataEdge>> { }
+    public class
+        WordGraphArea : GraphArea<WordDataVertex, WordDataEdge, BidirectionalGraph<WordDataVertex, WordDataEdge>>
+    {
+    }
 }
